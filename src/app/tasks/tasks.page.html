@@ -47,7 +47,7 @@
           <div class="act">
             <div *ngIf="act.isChecked==true" class="isChecked">
             <h5>{{act.nom}}</h5>
-            <p *ngIf="act.categorie">{{act.categorie.nom}} | {{act.date | date: 'hh'}}</p>
+            <p *ngIf="act.categorie">{{act.categorie.nom}} | {{act.heure}}h:{{act.minute}}min</p>
           </div>
           <div *ngIf="act.isChecked!=true">
             <h5>{{act.nom}}</h5>
@@ -88,7 +88,7 @@
   <ng-template>
     <ion-content>
       <ion-toolbar>
-        
+        <ion-title>Nouvelle Activité</ion-title>
       </ion-toolbar>
       <ion-list>
         <ion-item class="input">

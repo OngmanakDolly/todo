@@ -9,17 +9,22 @@
     margin-top: 30px;
 }
 
-.input{
+/*.input{
     --background: #ddd;
     border-radius: 20px;
     width: 80%;
+    height: 40px;
     margin-top: 40px;
     --placeholder-color: rgb(185, 178, 178);
     margin-left: 10%;
-}
+}*/
 
 
 ion-item{
     color:rgb(185, 178, 178);
+    font-size: 20px;
+}
+
+.lab{
     font-size: 20px;
 }

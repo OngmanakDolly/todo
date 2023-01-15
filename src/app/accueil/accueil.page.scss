@@ -186,7 +186,7 @@ ion-checkbox{
 
 
 ion-list{
-    background: #ddd;
+    //background: #ddd;
 }
 .task{
     background-color:rgb(222, 22, 22);
@@ -215,13 +215,19 @@ p{
 
 
 ion-modal {
-    --height: 70%;
+    --height: 45%;
 }
 
+.modal-form{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
 ion-datetime {
     --background: #a9c4f5;
     --background-rgb: 255, 241, 242;
     border-radius: 16px;
   box-shadow: rgba(var(--ion-color-primary-rgb), 0.3) 0px 10px 15px -3px;
+  width: 100%;
 }
 

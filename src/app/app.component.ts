@@ -37,9 +37,13 @@ export class AppComponent {
     console.log(this.cate);
     this.allcategories=await this.service.getData("Categories");
     console.log(this.allcategories);
-    this.allcategories.push(this.cate);
+    if(this.cate.nom!="")
+    {
+      this.allcategories.push(this.cate);
     console.log("liste categories",this.allcategories);
     await this.service.writeData("Categories",this.allcategories);
+    }
+    
     this.modal.dismiss();
   }
 

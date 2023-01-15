@@ -97,7 +97,7 @@ export class TasksPage implements OnInit {
     console.log(value);
     this.formatedTime=value;
     let maDate=new Date(value);
-    this.act.heure=maDate.getTime();
+    this.act.heure=maDate.getHours();
     this.act.minute=maDate.getMinutes();
     this.isShowHourPicker=false;
     
@@ -106,7 +106,9 @@ export class TasksPage implements OnInit {
   async save()
   {
     console.log("categorie new activite",this.act.categorie);
-    if(await this.service.getData("Activites"))
+    if(this.act.nom!="")
+    {
+      if(await this.service.getData("Activites"))
     {
       this.allactivities=await this.service.getData("Activites");
       this.act.id=this.allactivities[this.allactivities.length-1].id+1;
@@ -119,6 +121,8 @@ export class TasksPage implements OnInit {
     //this.act.date=this.formatedDate;
     console.log(this.allactivities);
     await this.service.writeData("Activites",this.allactivities);
+    }
+    
     this.getAct();
     console.log(this.act);
     

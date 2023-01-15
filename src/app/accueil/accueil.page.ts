@@ -127,7 +127,7 @@ formatedTime=new Date(Date.now());
     console.log(value);
     this.formatedTime=value;
     let maDate=new Date(value);
-    this.act.heure=maDate.getTime();
+    this.act.heure=maDate.getHours();
     this.act.minute=maDate.getMinutes();
     this.isShowHourPicker=false;
     
@@ -136,7 +136,8 @@ formatedTime=new Date(Date.now());
   async save()
   {
     console.log("categorie new activite",this.act.categorie);
-    if(await this.service.getData("Activites"))
+    if(this.act.nom!=""){
+      if(await this.service.getData("Activites"))
     {
       this.allactivities=await this.service.getData("Activites");
       this.act.id=this.allactivities[this.allactivities.length-1].id+1;
@@ -151,6 +152,8 @@ formatedTime=new Date(Date.now());
     await this.service.writeData("Activites",this.allactivities);
     console.log(this.act);
     this.filterItems();
+    }
+    
     this.modal.dismiss();
   }
 
