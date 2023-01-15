@@ -1,0 +1,56 @@
+
+
+
+<ion-content>
+<ion-datetime [presentation]="selectedDate" #date [value]="dateValue" (ionChange)="dateChanged(date.value)"></ion-datetime>
+<div *ngIf="currentDayActivities.length!=0">
+  <div class="content-header">
+    <ion-item>
+      <ion-icon name="calendar" color="primary" slot="start"></ion-icon>
+      <ion-label>Date</ion-label>
+      <ion-text slot="end">{{formatedDate | date: 'dd'}} / {{formatedDate | date:'MM'}} / {{formatedDate | date: 'yyyy'}}</ion-text>
+    </ion-item>
+  </div>
+<div class="contener">
+  
+<ion-list >
+  <div *ngFor="let act of currentDayActivities">
+  <ion-item-sliding class="content_div">
+    <ion-item lines="none">
+      
+      <div class="act">
+        <div *ngIf="act.isChecked==true" class="isChecked">
+        <h5>{{act.nom}}</h5>
+        <p *ngIf="act.categorie">{{act.categorie.nom}} | {{act.heure}}h:{{act.minute}}min</p>
+      </div>
+      <div *ngIf="act.isChecked!=true">
+        <h5>{{act.nom}}</h5>
+        <p *ngIf="act.categorie">{{act.categorie.nom}} | {{act.heure}}h:{{act.minute}}min</p>
+      </div>
+        <div class="icons-sub">
+          <ion-icon name="notifications-outline"></ion-icon>
+          <ion-icon name="sync-outline"></ion-icon>
+          <ion-icon name="attach-outline"></ion-icon>
+        </div>
+      </div>
+
+  
+    </ion-item>
+    <ion-item-options>
+      <ion-item-option color="danger">
+        <ion-button fill="clear" (click)="deleteActivity(act)">
+          <ion-icon name="trash" slot="icon-only" size="small"></ion-icon>
+        </ion-button>
+      </ion-item-option>
+    </ion-item-options>
+    
+  </ion-item-sliding>
+  <hr>
+</div>
+</ion-list>
+</div>
+</div>
+<div *ngIf="currentDayActivities.length==0">
+<img src="../../assets/img/vide.jpg" class="empty">
+</div>
+</ion-content>

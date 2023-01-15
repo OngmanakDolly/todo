@@ -1,0 +1,189 @@
+
+
+<div class="header">
+  <div class="text-header">
+</div>
+  <ion-searchbar mode="ios" placeholder="Rechercher..." (ionInput)="searchItems($event)"></ion-searchbar>
+  <div class="slider">
+    <div class="slide" (click)="getAct()">
+      <div class="cat"><h6 class="img-name">Tout</h6></div>
+    </div>
+    <div class="slide" *ngFor="let cat of categories" (click)="filterByCategorie(cat.nom)">
+      <div class="cat"><h6 class="img-name">{{cat.nom}}</h6></div>
+    </div>
+  </div>
+</div>
+
+
+
+<ion-content>
+  <!--<ion-slides [options]="catSlideOpts">
+  <ion-slide *ngFor="let cat of categories">
+    <div class="categories">
+   <img src="{{cat.image}}">
+    <p class="img-name">{{cat.nom}}</p>
+  </div>
+  </ion-slide>
+</ion-slides>-->
+
+
+<div *ngIf="isSearching==false">
+  <div class="contener"  *ngIf="activitiesfiltred.length!=0">
+    <div class="content-header">
+      <p>Toutes Les activités</p>
+    </div>
+    <ion-list>
+      <div *ngFor="let act of activitiesfiltred">
+        <ion-checkbox mode="ios" checked="{{act.isChecked}}" (ionChange)="checkboxFacePlotting($event,act)"></ion-checkbox>
+      <ion-item-sliding class="content_div">
+        <ion-item lines="none">
+          <div class="icons">
+            <ion-button (click)="priority()" fill="clear">
+              <ion-icon *ngIf="act.priorite==1" color="success" name="bookmark-outline"></ion-icon>
+              <ion-icon *ngIf="act.priorite==0" color="dark" name="bookmark-outline"></ion-icon>
+            </ion-button>
+            
+          </div>
+          <div class="act">
+            <div *ngIf="act.isChecked==true" class="isChecked">
+            <h5>{{act.nom}}</h5>
+            <p *ngIf="act.categorie">{{act.categorie.nom}} | {{act.date | date: 'hh'}}</p>
+          </div>
+          <div *ngIf="act.isChecked!=true">
+            <h5>{{act.nom}}</h5>
+            <p *ngIf="act.categorie">{{act.categorie.nom}} | {{act.heure}}h:{{act.minute}}min</p>
+            <p>{{act.jour}}-{{act.mois}}-{{act.annee}}</p>
+          </div>
+            <div class="icons-sub">
+              
+            </div>
+          </div>
+
+      
+        </ion-item>
+        <ion-item-options>
+          <ion-item-option color="danger">
+            <ion-button fill="clear" (click)="deleteActivity(act)">
+              <ion-icon name="trash" slot="icon-only" size="small"></ion-icon>
+            </ion-button>
+          </ion-item-option>
+        </ion-item-options>
+        
+      </ion-item-sliding>
+      <hr>
+  </div>
+</ion-list>
+</div>
+<div *ngIf="activitiesfiltred.length==0">
+  <img src="../../assets/img/vide.jpg" class="empty">
+</div>
+<div class="bouton">
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+<ion-fab-button mode="ios" id="formulaire2">
+        <ion-icon name="add"></ion-icon>
+</ion-fab-button>
+</ion-fab>
+</div>
+<ion-modal #modal trigger="formulaire2">
+  <ng-template>
+    <ion-content>
+      <ion-toolbar>
+        
+      </ion-toolbar>
+      <ion-list>
+        <ion-item class="input">
+          <div>
+          <ion-label position="floating">Nom</ion-label>
+          <ion-input [(ngModel)]="act.nom" required></ion-input>
+        </div>
+          
+        </ion-item>
+        <ion-item class="input">
+          <div>
+          <ion-label position="floating">Catégorie</ion-label>
+          <ion-select (ionChange)="handleChange($event)" interface="popover">
+              <ion-select-option *ngFor="let cat of categories" [value]="cat" >{{cat.nom}}</ion-select-option> 
+              
+          </ion-select>
+        </div>
+        </ion-item>
+        <ion-item (click)="showDatePicker()">
+          <ion-icon name="calendar" color="primary" slot="start"></ion-icon>
+          <ion-label>Date</ion-label>
+          <ion-text slot="end">{{formatedDate | date: 'dd'}} / {{formatedDate | date:'MM'}} / {{formatedDate | date: 'yyyy'}}</ion-text>
+        </ion-item>
+          <ion-datetime [presentation]="selectedDateMode" *ngIf="isShowDatePicker" #date [value]="dateValue" (ionChange)="dateChanged(date.value)" showDefaultButtons="true" doneText="Ok"
+          cancelText="Annuler">
+        </ion-datetime>
+          <ion-item (click)="showHourPicker()">
+            <ion-icon name="time" slot="start" color="primary"></ion-icon>
+            <ion-label>Heure</ion-label>
+            <ion-text slot="end">{{formatedTime| date:'hh'}} : {{formatedTime| date:'mm'}}</ion-text>
+          </ion-item>
+            <ion-datetime [presentation]="selectedHourMode" *ngIf="isShowHourPicker" #time [value]="timeValue" (ionChange)="timeChanged(time.value)" showDefaultButtons="true" doneText="Ok"
+            cancelText="Annuler"></ion-datetime>
+        <div class="modal-form">
+          <ion-label style="margin-left:30px;" color="primary" (click)="modal.dismiss()" slot="start">
+            ANNULER
+          </ion-label>
+          <ion-label style="margin-right:30px;" color="primary" slot="start" (click)="save()">
+            ENREGISTRER
+          </ion-label>
+        </div>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+</div>
+<div *ngIf="isSearching==true">
+  <div class="contener"  *ngIf="results.length!=0">
+    <div class="content-header">
+      <p>Toutes Les activités</p>
+    </div>
+    <ion-list>
+      <div *ngFor="let act of results">
+        <ion-checkbox mode="ios" checked="{{act.isChecked}}" (ionChange)="checkboxFacePlotting($event,act)"></ion-checkbox>
+      <ion-item-sliding class="content_div">
+        <ion-item lines="none">
+          <div class="icons">
+            <ion-button (click)="priority()" fill="clear">
+              <ion-icon *ngIf="act.priorite==1" color="success" name="bookmark-outline"></ion-icon>
+              <ion-icon *ngIf="act.priorite==0" color="dark" name="bookmark-outline"></ion-icon>
+            </ion-button>
+            
+          </div>
+          <div class="act">
+            <div *ngIf="act.isChecked==true" class="isChecked">
+            <h5>{{act.nom}}</h5>
+            <p *ngIf="act.categorie">{{act.categorie.nom}} | {{act.date | date: 'hh'}}</p>
+          </div>
+          <div *ngIf="act.isChecked!=true">
+            <h5>{{act.nom}}</h5>
+            <p *ngIf="act.categorie">{{act.categorie.nom}} | {{act.heure}}h:{{act.minute}}min</p>
+            <p>{{act.jour}}-{{act.mois}}-{{act.annee}}</p>
+          </div>
+            <div class="icons-sub">
+              
+            </div>
+          </div>
+
+      
+        </ion-item>
+        <ion-item-options>
+          <ion-item-option color="danger">
+            <ion-button fill="clear" (click)="deleteActivity(act)">
+              <ion-icon name="trash" slot="icon-only" size="small"></ion-icon>
+            </ion-button>
+          </ion-item-option>
+        </ion-item-options>
+        
+      </ion-item-sliding>
+      <hr>
+  </div>
+</ion-list>
+</div>
+<div *ngIf="results.length==0">
+  <img src="../../assets/img/vide.jpg" class="empty">
+</div>
+</div>
+</ion-content>

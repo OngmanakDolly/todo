@@ -1,0 +1,8 @@
+[
+    {"nom":"All","image":"/assets/img/etude.JPG"},
+    {"nom":"Travail","image":"/assets/img/travail.JPG"},
+    {"nom":"Anniversaire","image":"/assets/img/anniversaire.JPG"},
+    {"nom":"Etude","image":"/assets/img/etude.JPG"},
+    {"nom":"Sport","image":"/assets/img/sport.JPG"},
+    {"nom":"Alimentation","image":"/assets/img/alimentation.JPG"},
+  ]

@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Activités Effectuées</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-datetime [presentation]="selectedDate" #date [value]="dateValue" (ionChange)="dateChanged(date.value)"></ion-datetime>
+  <div *ngIf="currentDayDoneActivities.length!=0">
+    <div class="content-header">
+      <ion-item>
+        <ion-icon name="calendar" color="primary" slot="start"></ion-icon>
+        <ion-label>Date</ion-label>
+        <ion-text slot="end">{{formatedDate | date: 'dd'}} / {{formatedDate | date:'MM'}} / {{formatedDate | date: 'yyyy'}}</ion-text>
+      </ion-item>
+    </div>
+  <div class="contener">
+    
+  <ion-list >
+    <div *ngFor="let act of currentDayDoneActivities">
+      <ion-item lines="none">
+        
+        <div class="act">
+          <div class="isChecked">
+          <h5>{{act.nom}}</h5>
+          <p *ngIf="act.categorie">{{act.categorie.nom}} | {{act.date | date: 'hh'}}</p>
+        </div>
+          <div class="icons-sub">
+            <ion-icon name="notifications-outline"></ion-icon>
+            <ion-icon name="sync-outline"></ion-icon>
+            <ion-icon name="attach-outline"></ion-icon>
+          </div>
+        </div>
+  
+    
+      </ion-item>
+     
+    <hr>
+  </div>
+  </ion-list>
+  </div>
+  </div>
+  <div *ngIf="currentDayDoneActivities.length==0">
+  <img src="../../assets/img/vide.jpg" class="empty">
+  </div>
+  </ion-content>

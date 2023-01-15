@@ -1,3 +1,60 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" menuId="pearl_side" class="bg_side" type="overlay">
+    <ion-content>
+      <div><img src="../assets/img/image_logo.png" class="image-icone"></div>
+      <ion-accordion-group mode="ios">
+        <ion-accordion>
+          <ion-item slot="header">Catégories</ion-item>
+        <div slot="content">
+          <ion-item lines="none" *ngFor="let allcat of allcategories">
+            <ion-icon name="reader-outline" slot="start"></ion-icon>
+            {{allcat.nom}}
+            <ion-badge slot="end">22</ion-badge>
+          </ion-item>
+        
+          <ion-item lines="none">
+            <ion-button id="open-modal" fill="clear" (click)="basculemenu()">
+              <ion-icon name="add" slot="start" color="dark" size="medium"></ion-icon>
+              <ion-label>Ajouter</ion-label>
+              </ion-button>
+              
+          </ion-item>
+         
+        </div>
+      </ion-accordion>
+      </ion-accordion-group>
+      <ion-item lines="none"[routerLink]="['done-tasks']">
+        <ion-label>Activités Effectuées</ion-label>
+        </ion-item>
+      <ion-modal #modal trigger="open-modal">
+        <ng-template>
+          <ion-content>
+            <ion-toolbar>
+              
+            </ion-toolbar>
+            <ion-list>
+              <ion-item class="input">
+                <div>
+                <ion-label position="floating">Nom</ion-label>
+                <ion-input [(ngModel)]="cate.nom"></ion-input>
+              </div>
+                
+              </ion-item>
+              <div class="modal-form">
+                <ion-label style="margin-left:30px;" color="primary" (click)="modal.dismiss()" slot="start">
+                  ANNULER
+                </ion-label>
+                <ion-label style="margin-right:30px;" color="primary" slot="start" (click)="save()">
+                  ENREGISTRER
+                </ion-label>
+              </div>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+    </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+    </ion-split-pane>
 </ion-app>
