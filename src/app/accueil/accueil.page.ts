@@ -136,7 +136,6 @@ formatedTime=new Date(Date.now());
   async save()
   {
     console.log("categorie new activite",this.act.categorie);
-    if(this.act.nom!=""){
       if(await this.service.getData("Activites"))
     {
       this.allactivities=await this.service.getData("Activites");
@@ -152,7 +151,6 @@ formatedTime=new Date(Date.now());
     await this.service.writeData("Activites",this.allactivities);
     console.log(this.act);
     this.filterItems();
-    }
     
     this.modal.dismiss();
   }
